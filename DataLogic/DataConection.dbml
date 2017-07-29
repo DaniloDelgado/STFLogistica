@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="STFDatabase" Class="DataConectionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-F58PPIM\MSSQLSERVER01;Initial Catalog=STFDatabase;Integrated Security=True" SettingsObjectName="DataLogic.Properties.Settings" SettingsPropertyName="STFDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Barge" Member="Barges">
+    <Type Name="Barge">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BargeName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Barge_BargeTravel" Member="BargeTravels" ThisKey="Id" OtherKey="BargeId" Type="BargeTravel" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BargeEvent" Member="BargeEvents">
+    <Type Name="BargeEvent">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Event_BargeEvent" Member="Event" ThisKey="EventId" OtherKey="Id" Type="Event" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Bargeload" Member="Bargeloads">
+    <Type Name="Bargeload">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BargeTravelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BargeLoadStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BargeLoadFinish" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="BargeTravel_Bargeload" Member="BargeTravel" ThisKey="BargeTravelId" OtherKey="Id" Type="BargeTravel" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BargeTravel" Member="BargeTravels">
+    <Type Name="BargeTravel">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BargeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TravelNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="BargeTravel_Bargeload" Member="Bargeloads" ThisKey="Id" OtherKey="BargeTravelId" Type="Bargeload" />
+      <Association Name="BargeTravel_BargeUnload" Member="BargeUnloads" ThisKey="Id" OtherKey="BargeTravelId" Type="BargeUnload" />
+      <Association Name="Barge_BargeTravel" Member="Barge" ThisKey="BargeId" OtherKey="Id" Type="Barge" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BargeUnload" Member="BargeUnloads">
+    <Type Name="BargeUnload">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BargeTravelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BargeUnloadStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BargeUnloadFinish" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="BargeTravel_BargeUnload" Member="BargeTravel" ThisKey="BargeTravelId" OtherKey="Id" Type="BargeTravel" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Events" Member="Events">
+    <Type Name="Event">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EventDescription" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EventTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AffectBarge" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AfectChippingTable" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Event_BargeEvent" Member="BargeEvents" ThisKey="Id" OtherKey="EventId" Type="BargeEvent" />
+      <Association Name="EventType_Event" Member="EventType" ThisKey="EventTypeId" OtherKey="Id" Type="EventType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EventTypes" Member="EventTypes">
+    <Type Name="EventType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EventTypeDescription" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="EventType_Event" Member="Events" ThisKey="Id" OtherKey="EventTypeId" Type="Event" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rol" Member="Rols">
+    <Type Name="Rol">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RolName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Rol_User" Member="Users" ThisKey="Id" OtherKey="RolId" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RolId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Rol_User" Member="Rol" ThisKey="RolId" OtherKey="Id" Type="Rol" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

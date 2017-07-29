@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataLogic
 {
-    public class Class1
+    partial class Barge
     {
+    }
+
+    public class DataConection
+    {
+
     }
 }

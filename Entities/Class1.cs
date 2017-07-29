@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLogic;
 
-namespace STFLogic
+namespace Entities
 {
     public class Class1
     {
-        Barge testBarge = new Barge();
-
     }
 }

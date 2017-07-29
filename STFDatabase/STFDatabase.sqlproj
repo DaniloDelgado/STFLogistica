@@ -66,7 +66,6 @@
     <Folder Include="Events" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Security\GlobalUser.sql" />
     <Build Include="Tables\Barge\Barge.sql" />
     <Build Include="Tables\Barge\BargeTravel.sql" />
     <Build Include="Tables\Barge\BargeUnload.sql" />
